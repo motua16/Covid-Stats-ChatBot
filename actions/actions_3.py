@@ -24,9 +24,9 @@ class ActionEntity(Action):
             text="Showing Nationwide results")
 
 
-        if (slot_state is None and slot_pincode is None) :
+        elif (slot_state is None and slot_pincode is None) :
             dispatcher.utter_message(
-            text="Which state/pincode do you want to know about?")
+            text="Which state/city/pincode do you want to know about?")
 
         
         else:

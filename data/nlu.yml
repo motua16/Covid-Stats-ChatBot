@@ -114,7 +114,10 @@ nlu:
     - covid-19 status
     - covid-19 cases near me
     - current pandemic situation
-    - 
+    - I want to know corona virus situation 
+    - Show me covid stats
+    - Covid Counts
+
 
 - intent: corona_states_stat
   examples: |
@@ -122,7 +125,7 @@ nlu:
     - I want to know about corona [India](state)
     - Tell me about [India](state)
     - I want to know about [Gujarat](state)
-    - Tell me about [Gujarat](state)
+    - Tell me about [gujarat](state)
     - I want to know about Corona [Gujarat](state)
     - I want to know about [Andhra Pradesh](state)
     - Tell me about [Andhra Pradesh](state)
@@ -143,11 +146,11 @@ nlu:
     - I want to know about [Jharkhand](state)
     - Tell me about [Jharkhand](state)
     - I want to know about [Karnataka](state)
-    - Tell me about [Karnataka](state)
+    - Tell me about [karnataka](state)
     - I want to know about [Madhya Pradesh](state)
     - Tell me about [Madhya Pradesh](state)
     - I want to know about [Kerala](state)
-    - Tell me about [Kerala](state)
+    - Tell me about [kerala](state)
     - I want to know about [Maharashtra](state)
     - Tell me about [Maharashtra](state)
     - I want to know about [Manipur](state)
@@ -161,17 +164,17 @@ nlu:
     - I want to know about [Odisha](state)
     - Tell me about [Odisha](state)
     - I want to know about [Punjab](state)
-    - Tell me about [Punjab](state)
+    - Tell me about [punjab](state)
     - I want to know about [Rajasthan](state)
-    - Tell me about [Rajasthan](state)
+    - Tell me about [rajasthan](state)
     - I want to know about [Jammu and Kashmir](state)
     - Tell me about [Jammu and Kashmir](state)
     - I want to know about [Sikkim](state)
-    - Tell me about [Sikkim](state)
+    - Tell me about [sikkim](state)
     - I want to know about [Tamil Nadu](state)
     - Tell me about [Tamil Nadu](state)
     - I want to know about [Telangana](state)
-    - Tell me about [Telangana](state)
+    - Tell me about [telangana](state)
     - I want to know about [Tripura](state)
     - Tell me about [Tripura](state)
     - I want to know about [Uttar Pradesh](state)
@@ -190,6 +193,32 @@ nlu:
     - I want to know about [543453](pincode)
     - I want to know about [564464](pincode)
     - I want to know about [334343](pincode)
+    - [Vishakhapatnam](state)
+    - [Raipur](state)
+    - [Ranchi](state)
+    - [Jamshedpur](state)
+    - [Patratu](state)
+    - [dsjfdsdj](state)
+    - [Port Blair](state)
+    - [Madhya Pradesh](state)
+    - [Nainital](state)
+    - [Bistupur](state)
+    - [bagalkote](state)
+    - [belagavi](state)
+    - [bellary](state)
+    - [gadag](state)
+    - [hassan](state)
+    - [gulbarga](state)
+    - [dharwad](state)
+    - [haveri](state)
+    - [kolar](state)
+    - [thane](state)
+    - [pune](state)
+    - [satara](state)
+    - [sangli](state)
+    - [solapur](state)
+    - [usman](state)
+
     
 - intent: name_entry
   examples: |
@@ -206,29 +235,9 @@ nlu:
     - It's [Kanchan](name)
     - It's [Divya](name)
     - [ashish](name) is my name
-    - [Ashish](name)
-    - [Rahul](name)
-    - [ashish](name)
     - My name is [Harsh](name)
     - [harsh](name) this side
     - It's [harsh](name)
-    - [harsh](name) is my name
-    - [Harsh](name)
-    - [rahul](name)
-    - [Praveen](name)
-    - [Natasha](name)
-    - [Madhusudan](name)
-    - [aditya](name)
-    - [Aditya](name)
-    - [akshay](name)
-    - [Sankalp](name)
-    - [Bharath](name)
-    - [John](name)
-    - [Kanchan](name)
-    - [Divya](name)
-    - [divya](name)
-    - [Mohit](name)
-    - [mukesh](name)
     - It is [Tom](name)
     - It is [shubham](name)
     - It is [krishna](name)
@@ -239,20 +248,19 @@ nlu:
     - It is [divya](name)
     - It is [praveen](name)
     - It is [aditya](name)
-
     - My name is [Bob](name)
     - my name is [Harsh](name)
     - name is [Rajesh](name)
     - my name is [demo](name)
     - my name is [praveen](name)
-    - My name is [shubham](name)
+    - My name is [Shubham](name)
     - my name is [aditya](name)
     - my name is [kirushanth](name)
-    - my name is [madhusudan](name)
+    - my name is [Madhusudan](name)
     - my name is [akshay](name)
     - my name is [tarique](name)
     - My name is [divya](name)
-    - my name is [kanchan](name)
+    - my name is [Kanchan](name)
     - name is [demo](name)
     - name is [shubham](name)
     - name is [divya](name)
@@ -306,3 +314,11 @@ nlu:
 - regex: pincode
   examples: |
     - \d{6}
+
+- regex: state
+  examples: |
+    - ^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$
+
+- regex: name
+  examples: |
+    - /^[a-z ,.'-]+$/i
