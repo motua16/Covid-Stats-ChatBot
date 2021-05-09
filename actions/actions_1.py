@@ -28,8 +28,21 @@ class Actioncoronastats(Action):
         print(slot_state)
         print(slot_pincode)
 
+        if tracker.latest_message['intent'].get('name')=='deny':
+            responses = requests.get("https://api.covid19india.org/data.json").json()
+            state = "Total"
+                
+            for data in responses["statewise"]:
+                if data["state"] == state.title():
+                
+                    message = "Now Showing Cases For --> " + state.title()+"\n" + "****Overall****"+ "\n"+"\n" + "Active: " + data["active"] + " \n" + "Confirmed: " + data["confirmed"] + " \n" + "Recovered: " + data["recovered"] + " \n" + "Deaths: " + data["deaths"] + " \n"+"\n"+"\n" + "****Today's Reported Cases****"+ "\n"+ "\n" + "Confirmed Today: " + data["deltaconfirmed"] + " \n"  + "Recovered Today: " + data["deltarecovered"] + " \n" + "Deaths Today: " + data["deltadeaths"]
+            dispatcher.utter_message(message)
+            return []
 
-        if ((slot_state is not None or slot_pincode is not None) and tracker.latest_message['intent'].get('name')=='affirm') :
+
+
+
+        elif ((slot_state is not None or slot_pincode is not None) and tracker.latest_message['intent'].get('name')=='affirm') :
             
             try:
                 entities = tracker.latest_message['entities']

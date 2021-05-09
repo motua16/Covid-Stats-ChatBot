@@ -19,7 +19,12 @@ class ActionEntity(Action):
         slot_pincode = tracker.get_slot("pincode")
         print("latest message intent ",tracker.latest_message['intent'].get('name'))
         # print("slotname", slot_name)
-        if (slot_state is None and slot_pincode is None) or tracker.latest_message['intent'].get('name')=='deny':
+        if  tracker.latest_message['intent'].get('name')=='deny':
+            dispatcher.utter_message(
+            text="Showing Nationwide results")
+
+
+        if (slot_state is None and slot_pincode is None) :
             dispatcher.utter_message(
             text="Which state/pincode do you want to know about?")
 

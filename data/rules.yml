@@ -31,3 +31,13 @@ rules:
   steps:
   - intent: Thanks
   - action: utter_Thanks
+
+- rule: thanks path
+  steps:
+  - intent: Thanks
+  - action: utter_Thanks
+
+- rule: who am i
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot

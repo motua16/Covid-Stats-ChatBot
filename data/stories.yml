@@ -26,6 +26,7 @@ stories:
   - action: actions_corona_state_stat
 
 
+
 - story: actual path 2
   steps: 
   - intent: greet
@@ -33,17 +34,7 @@ stories:
   - intent: corona_stats_check
   - action: action_know_whether_previous_calculated
   - intent: deny
-  - action: action_know_whether_previous_calculated
-  - intent: corona_states_stat
   - action: actions_corona_state_stat 
 
 
-- story: thanks path
-  steps:
-  - intent: Thanks
-  - action: utter_Thanks
 
-- story: who am i
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
