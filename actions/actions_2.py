@@ -20,11 +20,11 @@ class ActionEntity(Action):
         print("slotname", slot_name)
         if slot_name is None:
             dispatcher.utter_message(
-            text="hi what is your name?")
+            text="Hi! What is your name?")
 
         
         else:
             dispatcher.utter_message(
-            text="hi what can I do for you " + slot_name+"?")
+            text="Hi " + slot_name.title() +  "! What can I do for you ?")
 
         return []

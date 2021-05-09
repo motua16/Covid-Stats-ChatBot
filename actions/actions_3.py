@@ -21,11 +21,11 @@ class ActionEntity(Action):
         # print("slotname", slot_name)
         if (slot_state is None and slot_pincode is None) or tracker.latest_message['intent'].get('name')=='deny':
             dispatcher.utter_message(
-            text="Tell me the state/pincode you want to know about")
+            text="Which state/pincode do you want to know about?")
 
         
         else:
             dispatcher.utter_message(
-            text="Do you want previously calculated results?")
+            text=f"Do you want recently shown results?")
 
         return []

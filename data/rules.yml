@@ -11,3 +11,23 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+- rule: show picture anytime user is sad
+  steps:
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+
+- rule: reply I am very happy to hear that when user is happy
+  steps:
+  - intent: mood_great
+  - action: utter_happy
+
+- rule: who am i
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: thanks path
+  steps:
+  - intent: Thanks
+  - action: utter_Thanks
