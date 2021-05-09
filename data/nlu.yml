@@ -181,6 +181,10 @@ nlu:
     - what are the corona cases today
     - What is the status of covid today
     - What is the status of corona today
+    - i want to know about corona statistics
+    - i want to know about covid statistics
+    - i want to know about covid stats
+    - i want to know about corona stats
 
 - intent: corona_states_stat
   examples: |

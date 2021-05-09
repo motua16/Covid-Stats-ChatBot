@@ -28,23 +28,23 @@ import requests
 #         return []
 
 
-class ActionHelloLoc(Action):
+# class ActionHelloLoc(Action):
 
-    def name(self) -> Text:
-        return "action_get_loc"
+#     def name(self) -> Text:
+#         return "action_get_loc"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        slot_name = tracker.get_slot("state")
-        slot_name = tracker.get_slot("pincode")
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#         slot_name = tracker.get_slot("state")
+#         slot_name = tracker.get_slot("pincode")
 
-        print("slotname", slot_name)
+#         print("slotname", slot_name)
 
-        dispatcher.utter_message(
-            text="So You Live In " + slot_name.title() + " , Here Are Your Location's Corona Stats: \n")
+#         dispatcher.utter_message(
+#             text="So You Live In " + slot_name.title() + " , Here Are Your Location's Corona Stats: \n")
 
-        return []
+#         return []
 
 class Actioncoronastats(Action):
 
@@ -56,52 +56,110 @@ class Actioncoronastats(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         print('hi')
-        entities = tracker.latest_message['entities']
-        if entities[0]["entity"] == "state":
-            responses = requests.get("https://api.covid19india.org/data.json").json()
-            message = "Please Enter Correct State Name !"
-            state = entities[0]["value"]
-            if state == "india":
-                state = "Total"
-            # print('responses')
-            # for data in responses["statewise"]:
-            for data in responses["statewise"]:
-                if data["state"] == state.title():
+        slot_state = tracker.get_slot("state")
+        slot_pincode = tracker.get_slot("pincode")
+        print(slot_state)
+        print(slot_pincode)
+
+
+        if ((slot_state is not None or slot_pincode is not None) and tracker.latest_message['intent'].get('name')=='affirm') :
+            # entities = tracker.latest_message['entities']
+            
+            if slot_state:
+                responses = requests.get("https://api.covid19india.org/data.json").json()
+                message = "Please Enter Correct State Name !"
+                state = entities[0]["value"]
+                if state == "india":
+                    state = "Total"
+                # print('responses')
+                # for data in responses["statewise"]:
+                for data in responses["statewise"]:
+                    if data["state"] == state.title():
+                    
+                        message = "Now Showing Cases For --> " + state.title()+"\n" + "****Overall****"+ "\n"+"\n" + "Active: " + data["active"] + " \n" + "Confirmed: " + data["confirmed"] + " \n" + "Recovered: " + data["recovered"] + " \n" + "Deaths: " + data["deaths"] + " \n"+"\n"+"\n" + "****Since last 24 hours****"+ "\n"+ "\n" + "Confirmed Today: " + data["deltaconfirmed"] + " \n"  + "Recovered Today: " + data["deltarecovered"] + " \n" + "Deaths Today: " + data["deltadeaths"]
+
+                print(message)
                 
-                    message = "Now Showing Cases For --> " + state.title()+"\n" + "****Overall****"+ "\n"+"\n" + "Active: " + data["active"] + " \n" + "Confirmed: " + data["confirmed"] + " \n" + "Recovered: " + data["recovered"] + " \n" + "Deaths: " + data["deaths"] + " \n"+"\n"+"\n" + "****Since last 24 hours****"+ "\n"+ "\n" + "Confirmed Today: " + data["deltaconfirmed"] + " \n"  + "Recovered Today: " + data["deltarecovered"] + " \n" + "Deaths Today: " + data["deltadeaths"]
+            else:
+                responses = requests.get(f"https://api.postalpincode.in/pincode/{tracker.get_slot('pincode')}").json()
 
-            print(message)
+                entities = tracker.latest_message['entities']
+                print("Now Showing Data For:", entities)
+                pincode = None
+
+                for i in entities:
+                    if i["entity"] == "pincode":
+                        pincode = i["value"]
+
+                message = "Please Enter Correct PinCode !"
+
+                if pincode == "":
+                    pincode = "Total"
             
-        else:
-            responses = requests.get(f"https://api.postalpincode.in/pincode/{tracker.get_slot('pincode')}").json()
+                temp_district = responses[0]['PostOffice'][0]['District']
+                temp_district = str(temp_district)
 
-            entities = tracker.latest_message['entities']
-            print("Now Showing Data For:", entities)
-            pincode = None
+                temp_state = responses[0]['PostOffice'][0]['State']
+                responses = requests.get("https://api.covid19india.org/state_district_wise.json").json()
+                info = responses[temp_state.title()]['districtData'][temp_district.title()]
+                
+                # if data["state"] == state.title():
+                # print(data)
+                message = "Now Showing Cases For --> " + temp_district +"\n"+ "****Overall****"+ "\n"+  "\n" +  "\n"+ "Active: " + str(info["active"]) + " \n" + "Confirmed: " + str(info["confirmed"]) + " \n" + "Recovered: " + str(info["recovered"]) + " \n" + "Deaths: " + str(info["deceased"])+" \n"+ "\n" + "\n"+ "****Since last 24 hours****"+ "\n" +  " \n" + "Confirmed Today: " + str(info["delta"]["confirmed"]) + " \n" + "Recovered Today: " + str(info["delta"]["recovered"]) + " \n" + "Deaths Today: " + str(info["delta"]["deceased"])
 
-            for i in entities:
-                if i["entity"] == "pincode":
-                    pincode = i["value"]
+            dispatcher.utter_message(message)
 
-            message = "Please Enter Correct PinCode !"
-
-            if pincode == "":
-                pincode = "Total"
+            return []
         
-            temp_district = responses[0]['PostOffice'][0]['District']
-            temp_district = str(temp_district)
+        else:
+            entities = tracker.latest_message['entities']
+            if entities[0]["entity"] == "state":
+                responses = requests.get("https://api.covid19india.org/data.json").json()
+                message = "Please Enter Correct State Name !"
+                state = entities[0]["value"]
+                if state == "india":
+                    state = "Total"
+                # print('responses')
+                # for data in responses["statewise"]:
+                for data in responses["statewise"]:
+                    if data["state"] == state.title():
+                    
+                        message = "Now Showing Cases For --> " + state.title()+"\n" + "****Overall****"+ "\n"+"\n" + "Active: " + data["active"] + " \n" + "Confirmed: " + data["confirmed"] + " \n" + "Recovered: " + data["recovered"] + " \n" + "Deaths: " + data["deaths"] + " \n"+"\n"+"\n" + "****Since last 24 hours****"+ "\n"+ "\n" + "Confirmed Today: " + data["deltaconfirmed"] + " \n"  + "Recovered Today: " + data["deltarecovered"] + " \n" + "Deaths Today: " + data["deltadeaths"]
 
-            temp_state = responses[0]['PostOffice'][0]['State']
-            responses = requests.get("https://api.covid19india.org/state_district_wise.json").json()
-            info = responses[temp_state.title()]['districtData'][temp_district.title()]
+                print(message)
+                
+            else:
+                responses = requests.get(f"https://api.postalpincode.in/pincode/{tracker.get_slot('pincode')}").json()
+
+                entities = tracker.latest_message['entities']
+                print("Now Showing Data For:", entities)
+                pincode = None
+
+                for i in entities:
+                    if i["entity"] == "pincode":
+                        pincode = i["value"]
+
+                message = "Please Enter Correct PinCode !"
+
+                if pincode == "":
+                    pincode = "Total"
             
-            # if data["state"] == state.title():
-            # print(data)
-            message = "Now Showing Cases For --> " + temp_district +"\n"+ "****Overall****"+ "\n"+  "\n" +  "\n"+ "Active: " + str(info["active"]) + " \n" + "Confirmed: " + str(info["confirmed"]) + " \n" + "Recovered: " + str(info["recovered"]) + " \n" + "Deaths: " + str(info["deceased"])+" \n"+ "\n" + "\n"+ "****Since last 24 hours****"+ "\n" +  " \n" + "Confirmed Today: " + str(info["delta"]["confirmed"]) + " \n" + "Recovered Today: " + str(info["delta"]["recovered"]) + " \n" + "Deaths Today: " + str(info["delta"]["deceased"])
+                temp_district = responses[0]['PostOffice'][0]['District']
+                temp_district = str(temp_district)
 
-        dispatcher.utter_message(message)
+                temp_state = responses[0]['PostOffice'][0]['State']
+                responses = requests.get("https://api.covid19india.org/state_district_wise.json").json()
+                info = responses[temp_state.title()]['districtData'][temp_district.title()]
+                
+                # if data["state"] == state.title():
+                # print(data)
+                message = "Now Showing Cases For --> " + temp_district +"\n"+ "****Overall****"+ "\n"+  "\n" +  "\n"+ "Active: " + str(info["active"]) + " \n" + "Confirmed: " + str(info["confirmed"]) + " \n" + "Recovered: " + str(info["recovered"]) + " \n" + "Deaths: " + str(info["deceased"])+" \n"+ "\n" + "\n"+ "****Since last 24 hours****"+ "\n" +  " \n" + "Confirmed Today: " + str(info["delta"]["confirmed"]) + " \n" + "Recovered Today: " + str(info["delta"]["recovered"]) + " \n" + "Deaths Today: " + str(info["delta"]["deceased"])
 
-        return []
+            dispatcher.utter_message(message)
+
+            return []
+            
+
 
 # class Actioncoronastats(Action):
 

@@ -9,9 +9,9 @@ stories:
   - intent: greet
   - action: action_get_entity
   - intent: name_entry
-  - action: utter_name
+  - action: action_get_entity
   - intent: corona_stats_check
-  - action: utter_corona_stats_check
+  - action: action_know_whether_previous_calculated
   - intent: corona_states_stat
   - action: actions_corona_state_stat
 
@@ -21,32 +21,21 @@ stories:
   - intent: greet
   - action: action_get_entity
   - intent: corona_stats_check
-  - action: utter_corona_stats_check
-  - intent: corona_states_stat
+  - action: action_know_whether_previous_calculated
+  - intent: affirm
   - action: actions_corona_state_stat
 
-# - story: happy path
-#   steps:
-#   - intent: greet
-#   - action: utter_greet
-#   - intent: name_entry
-#   - action: utter_name
-#   - intent: mood_great
-#   - action: utter_happy
 
-
-
-# - story: sad path 1
-#   steps:
-#   - intent: greet
-#   - action: utter_greet
-#   - intent: name_entry
-#   - action: utter_name
-#   - intent: mood_unhappy
-#   - action: utter_cheer_up
-#   - action: utter_did_that_help
-#   - intent: affirm
-#   - action: utter_happy
+- story: actual path 2
+  steps: 
+  - intent: greet
+  - action: action_get_entity
+  - intent: corona_stats_check
+  - action: action_know_whether_previous_calculated
+  - intent: deny
+  - action: action_know_whether_previous_calculated
+  - intent: corona_states_stat
+  - action: actions_corona_state_stat 
 
 
 - story: thanks path
