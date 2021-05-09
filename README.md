@@ -25,7 +25,29 @@ The main tasks involved in this project are as follows:
 
 ## Demo
 
-![](demo/gif.gif)
+![](gif/gif.gif)
+
+## How to use
+
+* Clone the repo and change your directory:
+  
+  `git clone https://github.com/motua16/Covid-Stats-ChatBot `
+  
+  `cd Covid-Stats-ChatBot`
+
+* Create a virtual Environment and activate it
+
+  `python3 -m venv env`
+  
+  `source env/bin/activate`
+
+* Install rasa-x
+
+  `pip install pip rasa-x -i https://pypi.rasa.com/simple`
+  
+* Open rasa shell and interact
+
+  `rasa shell -m models/final.tar.gz`
 
 ## Repository Structure
 
@@ -63,6 +85,9 @@ The main tasks involved in this project are as follows:
 
 ```
 
+## Further Steps
 
 
-
+* Deploy this bot on WhatsApp or Telegram 
+* Deploy as an online application
+* Giving more training examples and defining strategies so that the bot can effectively distinguish between name of a person and name of a place.
