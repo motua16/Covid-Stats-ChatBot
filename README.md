@@ -22,6 +22,8 @@ The main tasks involved in this project are as follows:
 * Defining various intents that we want the bot to identify
 * Defining the domain, general stories and rules that it needs to follow
 * Defining actions that it needs to perform in various circumstances
+* Training the model on this data
+
 
 ## Demo
 
@@ -48,6 +50,22 @@ The main tasks involved in this project are as follows:
 * Open rasa shell and interact
 
   `rasa shell -m models/final.tar.gz`
+  
+## Features and Limitations
+
+The bot currently has these features:
+
+* It remembers your name from earlier in the conversation
+* It gives the data for district corresponding to the pincode/city/post-office name you enter. For eg: if you type 110016, which is the pincode for Hauz Khas, New Delhi then it gives you the data for the District under which it comes i.e., South West Delhi
+* It asks if you want previously calculated results, if prompt is yes: then the previous result is shown, otherwise Nationwide data is shown
+* It can handle basic greetings and conversations
+
+These are the limitations:
+
+* Since there can be multile places in India with the same name, sometimes we get results that are not what we expect. So it is better to go with pincodes
+* There can be minor spelling difference for the same place in the 2 API's that are being called, in which case we dont get desired results. for  eg `Visakhapatnam and Vishakhapatnam`
+* Sometimes the bot can interpret name of a person as a place or vice versa. So it is better to use complete sentences like `My name is John` when asked
+
 
 ## Repository Structure
 
