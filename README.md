@@ -1,5 +1,4 @@
 # Covid-Stats-ChatBot
-Get live Covid-19 stats for any Pincode/Town/State in India with this Rasa ChatBot
 
 ChatBot that gives real time statistics for any location in India. It currently accepts any post-office/district/state name. 
 
